@@ -13,16 +13,47 @@ done 2>/dev/null &
 # Setup Finder Commands
 # Show Library Folder in Finder
 echo "Setting finder settings"
+
+# Show /Library
 chflags nohidden ~/Library
 
-# Show Hidden Files in Finder
-defaults write com.apple.finder AppleShowAllFiles YES
+# Show /Volumes
+sudo chflags nohidden /Volumes
+
+# Show Filename Extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Show Path Bar in Finder
 defaults write com.apple.finder ShowPathbar -bool true
 
 # Show Status Bar in Finder
 defaults write com.apple.finder ShowStatusBar -bool true
+
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+# Set Downloads as the default location for new Finder windows
+defaults write com.apple.finder NewWindowTarget -string "PfDe"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
+
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+# Prevent Time Machine from prompting to use new hard drives as backup volume
+defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+# Show all processes in Activity Monitor
+defaults write com.apple.ActivityMonitor ShowCategory -int 0
 
 # Check for Homebrew, and then install it
 if test ! "$(which brew)"; then
@@ -46,56 +77,17 @@ echo "Upgrading Homebrew"
 brew upgrade
 
 # Download application list from GitHub
-echo "Pulling applist"
+echo "Pulling Applist"
 curl https://raw.githubusercontent.com/username/repository/master/applist.txt -o applist.txt
 
 # Install Applications
-while read -r app; do
-    if [[ "$app" == *"cask"* ]]; then
-        # Install cask application
-        brew cask install "${app#*cask:}"
-    else
-        # Install non-cask application
-        brew install "$app"
-    fi
-done < applist.txt
+echo "Installing Apps"
+brew bundle --file=applist.txt
 
 # Remove the local copy of the application list
 rm applist.txt
-----
-
-# Install iTerm2
-echo "Installing iTerm2..."
-brew cask install iterm2
-
-# Update the Terminal
-# Install oh-my-zsh
-echo "Installing oh-my-zsh..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-echo "Need to logout now to start the new SHELL..."
-logout
-
-# Install Git
-echo "Installing Git..."
-brew install git
-
-# Install Powerline fonts
-echo "Installing Powerline fonts..."
-git clone https://github.com/powerline/fonts.git
-cd fonts || exit
-sh -c ./install.sh
-
-# Install ruby
-if test ! "$(which ruby)"; then
-    echo "Installing Ruby..."
-    brew install ruby
-    echo "Adding the brew ruby path to shell config..."
-    echo 'export PATH='"/usr/local/opt/ruby/bin:$PATH" >>~/.bash_profile
-else
-    echo "Ruby already installed!"
-fi
 
 # Remove outdated versions from the cellar.
-echo "Running brew cleanup..."
+echo "Cleanup"
 brew cleanup
-echo "You're done!"
+echo "Done"
