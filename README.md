@@ -1,2 +1,2 @@
 # macos-quick-setup
-Repository which contains all the information I need to get up and running quickly with MacOS
+Installs Brew and modifies various system settings on macOS to be less obnoxious
