@@ -1,18 +1,16 @@
 # Brewfile for installing applications
 
 # Brews
-brew 'caffeinate'
 brew 'imagemagick'
 brew 'spoof-mac'
 brew 'mkvtoolnix'
 brew 'gallery-dl'
-brew 'nano'
 brew 'rclone'
 brew 'ffmpeg'
 brew 'htop'
 brew 'wget'
-brew 'docker'
 brew 'mas'
+brew 'optipng'
 
 # Casks
 cask 'affinity-publisher'
@@ -31,6 +29,11 @@ cask 'calibre'
 cask 'transmit'
 cask 'google-drive'
 cask 'zettlr'
+cask 'docker'
+cask 'anki'
+cask 'tailscale'
+cask 'makemkv'
+cask 'visual-studio-code'
 
 # Appstore Applications
 mas "1Password", id: 443987910
