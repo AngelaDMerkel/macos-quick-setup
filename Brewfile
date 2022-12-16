@@ -1,4 +1,4 @@
-# Bewfile for installing applications
+# Brewfile for installing applications
 
 # Brews
 brew 'caffeinate'
