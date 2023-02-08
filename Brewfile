@@ -35,9 +35,9 @@ cask 'tailscale'
 cask 'makemkv'
 cask 'visual-studio-code'
 cask 'little-snitch'
+cask '1password'
 
 # Appstore Applications
-mas "1Password", id: 443987910
 mas "Magnet", id: 441258766
 mas "Xcode", id: 497799835
 mas "Word", id: 462054704
