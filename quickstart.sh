@@ -78,14 +78,14 @@ brew upgrade
 
 # Download application list from GitHub
 echo "Pulling Applist"
-curl https://raw.githubusercontent.com/username/repository/master/applist.txt -o applist.txt
+curl https://github.com/AngelaDMerkel/macos-quick-setup/blob/af95b06e79d437bf29244954fa78322ae56a1af4/Brewfile -o Brewfile
 
 # Install Applications
 echo "Installing Apps"
-brew bundle --file=applist.txt
+brew bundle --file=Brewfile
 
 # Remove the local copy of the application list
-rm applist.txt
+rm Brewfile
 
 # Remove outdated versions from the cellar.
 echo "Cleanup"
