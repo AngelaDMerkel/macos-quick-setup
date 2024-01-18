@@ -10,7 +10,6 @@ brew 'ffmpeg'
 brew 'htop'
 brew 'wget'
 brew 'mas'
-brew 'optipng'
 
 # Casks
 cask 'affinity-publisher'
